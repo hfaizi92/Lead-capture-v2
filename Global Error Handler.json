@@ -1,0 +1,64 @@
+{
+  "name": "Global Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "49b417a6-d655-4076-8722-f7d9d6372270",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "sendTo": "yourname@gmail.com ",
+        "subject": "=⚠️ Workflow Failed: Lead Capture v2",
+        "message": "=Hi Admin, \nAn error occurred in your workflow.\n\nPlease check n8n logs for details.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        0
+      ],
+      "id": "0f38997d-c3d5-4d91-b532-0aeb0ebf5895",
+      "name": " Failed Error Email",
+      "webhookId": "9a519bd5-16ba-450f-b061-d4228012121f",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V2ayPLMHhkLfrj6K",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": " Failed Error Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d212da90-fe79-4161-a2a8-c75f6aeeda13",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "40998a901a985813ec9508b3516f6780bf236e196360098f3c4df43acad88a9f"
+  },
+  "id": "5JwgrWl7taPh6XER",
+  "tags": []
+}
