@@ -1,0 +1,564 @@
+{
+  "name": "Lead Capture v2",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1MZQ8I3RWZVs-tGrx1O1NLm6pInI8R_ykNgGFDmbf7bc",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1843367470,
+          "mode": "list",
+          "cachedResultName": "Form Responses 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MZQ8I3RWZVs-tGrx1O1NLm6pInI8R_ykNgGFDmbf7bc/edit#gid=1843367470"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "e268dcb5-59b7-4761-b5d3-e1187f146121",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "DgvOHpa74whnaEW0",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "15ea65a0-4c6c-43d2-be31-6d11b31e5abd",
+              "name": "Client Name",
+              "value": "={{ $('Google Sheets Trigger').item.json.Name }}",
+              "type": "string"
+            },
+            {
+              "id": "5a2b6fd5-8a07-4c76-bf75-03793710726c",
+              "name": "Email Address",
+              "value": "={{ $('Google Sheets Trigger').item.json.Email }}",
+              "type": "string"
+            },
+            {
+              "id": "52f9c3d4-e49e-4973-87e8-a602162145b1",
+              "name": "Contact No",
+              "value": "={{ $('Google Sheets Trigger').item.json['Contact No'] }}",
+              "type": "string"
+            },
+            {
+              "id": "ec1e9f14-2523-48db-a625-d42e5fbe397b",
+              "name": "Comments",
+              "value": "={{ $('Google Sheets Trigger').item.json.Comments }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        0
+      ],
+      "id": "2cb170cf-f7ae-4772-b894-bb1970e727b0",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "49fc3e2e-7059-4cbf-ad78-20e861230a39",
+              "leftValue": "={{ $json['Email Address'] }}",
+              "rightValue": "@company.com",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        752,
+        0
+      ],
+      "id": "7d784b2a-380a-4537-8044-c94fcd11c2ee",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c3fb5f13-b6ce-428f-8670-730c492b3ea4",
+              "name": "B2B Clients",
+              "value": "={{ $json['Client Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5a26fdcc-5773-45b8-ae98-c3f5dc597436",
+              "name": "Email Address",
+              "value": "={{ $json['Email Address'] }}",
+              "type": "string"
+            },
+            {
+              "id": "676f446f-0d0e-4e7a-a58a-10cb58ab0118",
+              "name": "Contact No",
+              "value": "={{ $json['Contact No'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        -96
+      ],
+      "id": "0eea266b-fb1a-4140-80e2-85912ae53068",
+      "name": "B2B Clients"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "63d1cfbe-430f-4965-a92c-5b11b76757e7",
+              "name": "Individual Clients",
+              "value": "={{ $json['Client Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "10cd0073-d9c7-44d5-9e77-15ba52cb4f10",
+              "name": "Email Address",
+              "value": "={{ $json['Email Address'] }}",
+              "type": "string"
+            },
+            {
+              "id": "cf7d6e4f-1991-4624-8efa-4ebb283dfa42",
+              "name": "Contact NO",
+              "value": "={{ $json['Contact No'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        976,
+        96
+      ],
+      "id": "38acbe40-0766-41f7-8ce0-7719aff8e96a",
+      "name": " Individual Clients"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1bTGWGqJezQpbK5HJkXuOtTKSoJNPS4cnOXbviUfTCLA",
+          "mode": "list",
+          "cachedResultName": "Leads_CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bTGWGqJezQpbK5HJkXuOtTKSoJNPS4cnOXbviUfTCLA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bTGWGqJezQpbK5HJkXuOtTKSoJNPS4cnOXbviUfTCLA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Client Name": "={{ $json['Client Name'] }}",
+            "Email Address": "={{ $json['Email Address'] }}",
+            "Contact No": "={{ $json['Contact No'] }}",
+            "Comments": "={{ $json.Comments }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Client Name",
+              "displayName": "Client Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Contact No",
+              "displayName": "Contact No",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        528,
+        0
+      ],
+      "id": "4f98652d-667c-4bb1-9905-1b1feef8f07a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "yKqpzZ9zapYH6DM2",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "yourname@gmail.com ",
+        "subject": "New Lead Received 🚀",
+        "message": "=Name: {{ $json['Client Name'] }} \nEmail: {{ $json['Email Address'] }} \nContact No: {{ $json['Contact No'] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        0
+      ],
+      "id": "6f0ac41a-6db3-4a11-97f6-263a3602af5c",
+      "name": "Auto-Notification to Admin",
+      "webhookId": "779120b7-710c-4c27-9a3a-4ecca402e136",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V2ayPLMHhkLfrj6K",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Email Address'] }}",
+        "subject": "Hi",
+        "message": "=Thank you  {{ $json.B2B }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        -96
+      ],
+      "id": "d880fcfb-fd6d-4424-9ec9-e435129ecb23",
+      "name": " (Confirmation Email)",
+      "webhookId": "81cd662b-44f4-4035-8d16-e8a101cfdf99",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V2ayPLMHhkLfrj6K",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json['Email Address'] }}",
+        "subject": "Hi",
+        "message": "Thank you",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1200,
+        96
+      ],
+      "id": "3727ea0d-9bec-4e13-acba-d083e7e7fc93",
+      "name": " (Confirmation Email)1",
+      "webhookId": "92510e6d-f8cb-423e-8714-23775f9c2b3d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V2ayPLMHhkLfrj6K",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1424,
+        -96
+      ],
+      "id": "0a5575b2-ef5b-4db5-962d-121bb065b978",
+      "name": "Wait",
+      "webhookId": "27fa6045-f25a-454d-b10e-b937135f9908"
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1424,
+        96
+      ],
+      "id": "8c43c021-2ca6-4f03-a19c-e0a11e077b33",
+      "name": "Wait1",
+      "webhookId": "a9d4d95a-0212-42e5-af7a-80f67b30a319"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('B2B Clients').item.json['Email Address'] }}",
+        "subject": "Quick Follow-up 😊",
+        "message": "=Hey {{ $('B2B Clients').item.json['B2B Clients'] }}, Just checking in — did you get a chance to read our last message?",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1648,
+        -96
+      ],
+      "id": "6472655c-ae2b-42a2-9c61-85015eb0094a",
+      "name": " Follow-up Email",
+      "webhookId": "8a64ef13-80ed-4029-af68-762771616832",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V2ayPLMHhkLfrj6K",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $(' Individual Clients').item.json['Email Address'] }}",
+        "subject": "Quick Follow-up 😊",
+        "message": "=Hey , Just checking in — did you get a chance to read our last message?",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1648,
+        96
+      ],
+      "id": "8a676651-1d01-48d4-a1aa-60b96ba351bb",
+      "name": "Follow-up Email",
+      "webhookId": "ff2ad6d3-b932-43b3-8ff0-130b0b7a11f2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "V2ayPLMHhkLfrj6K",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Auto-Notification to Admin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "B2B Clients",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": " Individual Clients",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "B2B Clients": {
+      "main": [
+        [
+          {
+            "node": " (Confirmation Email)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " Individual Clients": {
+      "main": [
+        [
+          {
+            "node": " (Confirmation Email)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-Notification to Admin": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " (Confirmation Email)": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " (Confirmation Email)1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": " Follow-up Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Follow-up Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Karachi",
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "5JwgrWl7taPh6XER"
+  },
+  "versionId": "cdbe2023-70af-4b8d-9b66-bc48ca1e5eed",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "40998a901a985813ec9508b3516f6780bf236e196360098f3c4df43acad88a9f"
+  },
+  "id": "N8oIgrcZqCyITD5V",
+  "tags": []
+}
